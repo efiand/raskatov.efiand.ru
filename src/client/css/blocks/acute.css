@@ -1,0 +1,5 @@
+.acute::after {
+	font-family: var(--font-sans-serif);
+	line-height: 1rem;
+	content: "\301";
+}

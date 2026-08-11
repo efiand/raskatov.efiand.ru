@@ -1,0 +1,15 @@
+---
+description: raskatov.efiand.ru — project-specific тесты
+alwaysApply: true
+---
+
+# Тестирование raskatov.efiand.ru
+
+Общая конвенция — [`testing-core.mdc`](site-core/testing-core.mdc).
+
+## Project-specific
+
+- **Manuscript** — `test/server/page.spec.js` (assets, `og:url`, favicon); `test/routes/sitemap-xml.spec.js` (исключение `/manuscript` из sitemap)
+- **Книги** — `test/routes/work-page.spec.js`, `test/templates/toc.spec.js`, `test/templates/nav-ring.spec.js`; контент произведений — `test/integration/validate.spec.js`
+- **Hyphenate** — hyphenation в `renderPage` (покрытие через integration/work routes)
+- **Privacy / mailto** — `test/routes/privacy.spec.js`, `test/templates/copyright.spec.js`, `test/templates/error-page.spec.js`

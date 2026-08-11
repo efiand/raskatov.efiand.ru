@@ -1,0 +1,32 @@
+{
+	"dependencies": {
+		"site-core": "github:efiand/site-core#1.7.12"
+	},
+	"imports": {
+		"#client/*": "./src/client/*",
+		"#common/*": "./app/common/*",
+		"#core/client/*": "site-core/client/*",
+		"#core/common/*": "site-core/common/*",
+		"#core/config/*": "site-core/config/*",
+		"#core/server/*": "site-core/server/*",
+		"#core/test-helpers/*": "site-core/test-helpers/*",
+		"#server/*": "./app/server/*"
+	},
+	"pre-commit": [
+		"lint-format",
+		"test"
+	],
+	"private": true,
+	"scripts": {
+		"build": "site-core-build",
+		"dev": "site-core-dev",
+		"lint": "site-core-lint",
+		"lint-format": "site-core-lint --write",
+		"postinstall": "site-core-postinstall",
+		"preview": "site-core-dev --preview",
+		"test": "npm run build && site-core-run node --import site-core/tools/register-vendors.js --test --test-isolation=process \"test/**/*.spec.js\"",
+		"type-check": "site-core-type-check",
+		"upgrade": "site-core-upgrade"
+	},
+	"type": "module"
+}

@@ -1,0 +1,46 @@
+---
+description: raskatov.efiand.ru — структура проекта и доменная логика
+alwaysApply: true
+---
+
+# raskatov.efiand.ru
+
+Премиальный сборник Андрея Раскатова. Shared-код — [`site-core`](../site-core) (`#core/*`). Конвенция — junction [`.cursor/rules/site-core/`](site-core/) (`code-style-core.mdc`, `workflow-core.mdc`, `communication-core.mdc`, …); **не дублируй** её в хосте. Ниже — конвенция на уровне хоста.
+
+## Структура
+
+- `app/common/` — `BOOKS`, `WORK_DATA`, `WORK_PAGES`, `MANUSCRIPT_PREFIX`; шаблоны; HTML-контент (`data/dabt/`, `data/poem/`, `privacy.html`)
+- `app/server/` — роуты (`dabt/:id`, `poem/:id`, …), `app.js`, `page.js` (hyphenate, зеркало рукописи); article OG/JSON-LD — core (`articleWork` / `articleSeries` в `LayoutData`); `publishedTime` и sitemap `lastmod` — хост (`resolveSourcePublishedTime` для HTML в `app/common/data/`)
+- `src/client/` — CSS (`main.css`, `manuscript.css`), BEM в `css/blocks/`, `entries/main.js`
+- `src/types/view.d.ts` — `Book`, `LayoutData.isManuscript`, `RouteParams.isManuscript`
+
+## configure-site
+
+`app/common/configure-site.js` — скаляры (`author`, `pubDate`, `version`, `yandexMetrikaId`, …). `app/server/lib/app.js` — `setSiteConfig({ routes, publicPages })` (книга + рукопись). Client — `src/client/entries/main.js`.
+
+## Издания (книга / рукопись)
+
+- Path-зеркало: `MANUSCRIPT_PREFIX` (`/manuscript`); sitemap — только книга ([`sitemap-xml.js`](app/server/routes/sitemap-xml.js) фильтрует manuscript из `publicPages`)
+- Dispatch: `createStandardRouteDispatcher({ resolveRequest: resolveManuscriptRequest })` — [`resolvePathnamePrefix`](../../site-core/server/lib/route-dispatcher.js) + `context: { isManuscript }`
+- `renderPage` ([`page.js`](app/server/lib/page.js)): entry `manuscript` / `main`, `faviconPrefix`, `MANUSCRIPT_IMAGE_PRELOAD_TEMPLATE`, `hyphenateRu`, `webAppTitle` «Рукопись»
+- Шаблоны: [`layout.js`](app/common/templates/layout.js), [`nav-ring.js`](app/common/templates/nav-ring.js), [`toc.js`](app/common/templates/toc.js) — переключение изданий и префиксы ссылок
+
+## site-core
+
+- Зависимость: `"site-core": "github:efiand/site-core#1.3.0"` (локально — `file:../site-core` при разработке core)
+- Импорты shared: `#core/common/*`, `#core/server/*`, `#core/client/*`, `#core/test-helpers/*`
+- `postinstall`: `site-core-postinstall` — junction rules, `.editorconfig`, `.vscode/*`, шрифты, pre-commit
+- Prod assets: `buildAssetQuery(getSiteConfig().version.CSS|JS)` → `?v=N&core=X.Y.Z`
+- CLI: `site-core-dev`, `site-core-lint`, `site-core-run`, `site-core-build-static-pages`
+
+## Dev
+
+`npm run dev` / `npm run preview` — `site-core-dev`. `createApp` из `app/server/lib/app.js`. Порт: `DEV_PORT` (dev), `PORT` (preview/prod).
+
+## Тесты
+
+`npm test` — см. [`testing-core.mdc`](site-core/testing-core.mdc) (§ Хосты). Project-specific — [`testing.mdc`](testing.mdc): manuscript, книги, hyphenate, privacy/mailto.
+
+## Деплой
+
+Reusable workflows site-core — pin в [`.github/workflows/ci.yml`](.github/workflows/ci.yml). Opt-out deploy: **`[no-deploy]`**, **`[WIP]`**; skip CI: **`[skip`**. Подробнее — [`workflow-core.mdc`](site-core/workflow-core.mdc).

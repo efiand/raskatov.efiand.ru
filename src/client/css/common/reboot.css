@@ -1,0 +1,48 @@
+html {
+	--color-white: #ffffff;
+	--scroll-behavior: auto;
+	--transition: none;
+}
+
+body {
+	margin: 0;
+	line-height: 1.5rem;
+	font-family: var(--font-sans-serif);
+	font-feature-settings:
+		"tnum" on,
+		"lnum" on;
+	text-rendering: optimizeLegibility;
+	color: var(--color-black);
+	-webkit-tap-highlight-color: transparent;
+	overflow-anchor: none;
+}
+
+h1,
+h2 {
+	font-weight: 400;
+	text-align: center;
+	text-wrap: balance;
+}
+
+a {
+	text-decoration-skip-ink: none;
+	transition: var(--transition);
+}
+
+ul,
+ol {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+p {
+	margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		--transition: 0.3s ease-in-out;
+		--scroll-behavior: smooth;
+	}
+}

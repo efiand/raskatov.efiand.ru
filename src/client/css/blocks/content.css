@@ -1,0 +1,42 @@
+.content {
+	flex-grow: 1;
+}
+
+.content--poem {
+	display: table;
+	margin-inline: auto;
+}
+
+.content--centered {
+	flex-grow: 0;
+	text-align: center;
+	hyphens: none;
+	text-wrap: balance;
+}
+
+.content p,
+.content li {
+	font-family: var(--font-serif);
+	font-size: 1.125rem;
+}
+
+.content li::before {
+	content: "—\0020";
+}
+
+.content--prose p,
+.content--prose li {
+	text-align: justify;
+	text-indent: 1.25em;
+}
+
+.content--poem p {
+	padding-left: 2rem;
+	text-indent: -2rem;
+}
+
+@media print {
+	.content {
+		page-break-after: avoid;
+	}
+}

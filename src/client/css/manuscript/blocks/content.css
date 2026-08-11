@@ -1,0 +1,29 @@
+.content--poem {
+	display: table;
+	margin-inline: auto;
+}
+
+.content--centered {
+	text-align: center;
+	hyphens: none;
+	text-wrap: balance;
+}
+
+.content p {
+	hyphens: auto;
+}
+
+.content--prose p {
+	text-indent: 1.25em;
+}
+
+.content--poem p {
+	padding-left: 1.25em;
+	text-indent: -1.25em;
+}
+
+@media print {
+	.content {
+		page-break-after: avoid;
+	}
+}

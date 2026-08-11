@@ -1,0 +1,16 @@
+**/*.core.css
+**/*.generated.css
+*cache*
+*tmp*
+.DS_Store
+.cursor/rules/site-core
+.editorconfig
+.env
+.vscode/*
+Thumbs.db
+app/__
+bundles
+node_modules
+public/**/*.html
+public/*.xml
+tmp

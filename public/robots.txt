@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /manuscript
+
+Host: https://raskatov.efiand.ru
+Sitemap: https://raskatov.efiand.ru/sitemap.xml

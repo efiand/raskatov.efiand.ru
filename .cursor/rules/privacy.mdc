@@ -1,0 +1,28 @@
+---
+description: raskatov.efiand.ru — политика конфиденциальности (шаблоны и UI)
+alwaysApply: true
+---
+
+# raskatov.efiand.ru — политика конфиденциальности
+
+Общая структура §1–§10, дополнения email/формы и тесты — в [`.cursor/rules/site-core/privacy-core.mdc`](site-core/privacy-core.mdc). Ниже — только дополнения для raskatov.efiand.ru.
+
+## Контент и роут
+
+- Текст политики — [`app/common/data/privacy.html`](app/common/data/privacy.html); дата редакции — `privacyRevisionDate` в [`configure-site.js`](app/common/configure-site.js), в роуте [`privacy.js`](app/server/routes/privacy.js) — [`renderTimeTag`](../../site-core/common/templates/time.js).
+- Разметка страницы — `<div class="content content--prose">` (prose inner-page).
+- Ссылка «Политика конфиденциальности» в футере — [`renderCopyright`](app/common/templates/copyright.js) на всех страницах, кроме `/privacy`.
+
+## Применимые дополнения
+
+- **Email** — есть `mailto:` через [`getEmailLink`](../../site-core/common/lib/get-email-link.js) (`#core/common/lib/get-email-link.js`); блок «формы» из privacy-core **не применяется**.
+- Сценарии §3: **отзыв на произведение** ([`work-page.js`](app/server/lib/work-page.js)), **сообщение об ошибке** ([`renderErrorPage`](app/common/templates/error-page.js)).
+
+## UI-согласие (хост)
+
+- Страницы произведений — рядом с «Оставить отзыв» отсылка к `/privacy` (согласие при нажатии).
+- Страницы ошибок с mailto — отсылка к `/privacy` рядом с email в [`renderErrorPage`](app/common/templates/error-page.js).
+
+## Тесты
+
+[`test/routes/privacy.spec.js`](test/routes/privacy.spec.js) — `registerPrivacyRouteTests` + project-specific `patterns` (отзыв, «Рукопись»); базовый набор — в core.
